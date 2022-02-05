@@ -5,7 +5,7 @@ namespace osslibs\HTTP;
 use Mockery;
 use osslibs\Curl\CurlFacade;
 use osslibs\Curl\CurlResponse;
-use osslibs\HTTP\Curl\CurlFacadeFactory;
+use osslibs\HTTP\Curl\CurlFactory;
 use osslibs\HTTP\Curl\CurlHttpClient;
 use PHPUnit\Framework\TestCase;
 
@@ -59,8 +59,8 @@ class CurlHttpClientTest extends TestCase
         $curl->shouldReceive('data')->once()->with($httpRequest->data());
         $curl->shouldReceive('execute')->once()->andReturn($curlResponse);
 
-        $factory = Mockery::mock(CurlFacadeFactory::class);
-        $factory->shouldReceive('makeCurlFacade')->once()->andReturn($curl);
+        $factory = Mockery::mock(CurlFactory::class);
+        $factory->shouldReceive('makeCurl')->once()->andReturn($curl);
 
         $client = new CurlHttpClient($factory);
         $httpResponse = $client->send($httpRequest);

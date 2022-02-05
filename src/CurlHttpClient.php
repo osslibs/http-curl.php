@@ -13,13 +13,13 @@ use osslibs\HTTP\HttpResponse;
 class CurlHttpClient implements HttpClient
 {
     /**
-     * @var CurlFacadeFactory
+     * @var CurlFactory
      */
     private $factory;
 
-    public function __construct(?CurlFacadeFactory $factory=null)
+    public function __construct(?CurlFactory $factory=null)
     {
-        $this->factory = $factory ?? new DefaultCurlFacadeFactory();
+        $this->factory = $factory ?? new HttpCurlFactory();
     }
 
     /**
@@ -30,7 +30,7 @@ class CurlHttpClient implements HttpClient
     public function send(HttpRequest $request): HttpResponse
     {
         try {
-            $curl = $this->factory->makeCurlFacade();
+            $curl = $this->factory->makeCurl();
             $curl->method($request->method());
             $curl->uri($request->uri());
             $curl->headersAssoc($request->headers());
